@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -35,20 +36,24 @@ android {
 }
 
 dependencies {
+    //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.google.code.gson:gson:2.8.9'
 
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
+    //Kotlin Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines:0.19.2'
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-
+    //RxJava
     implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.13'
-
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //RxAndrooid
     implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: '2.1.1'
+    //Dagger 2
+    implementation 'com.google.dagger:dagger:2.40'
+    kapt 'com.google.dagger:dagger-compiler:2.40'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

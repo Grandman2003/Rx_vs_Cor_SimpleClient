@@ -1,5 +1,7 @@
-package com.example.retrsample2
+package com.example.retrsample2.net
 
+import com.example.retrsample2.di.CorProvider
+import com.example.retrsample2.models.Student
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

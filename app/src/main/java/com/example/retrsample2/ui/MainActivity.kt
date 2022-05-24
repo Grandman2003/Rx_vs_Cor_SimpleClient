@@ -1,62 +1,38 @@
-package com.example.retrsample2
+package com.example.retrsample2.ui
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.retrsample2.App
+import com.example.retrsample2.net.StudentsServiceCor
+import com.example.retrsample2.net.StudentsServiceRx
 import com.example.retrsample2.databinding.ActivityMainBinding
-import io.reactivex.Scheduler
-import io.reactivex.Single
-import io.reactivex.android.plugins.RxAndroidPlugins
+import com.example.retrsample2.models.Student
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.internal.schedulers.RxThreadFactory
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
-import java.util.concurrent.Executors
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
+import javax.inject.Inject
 
 class MainActivity: AppCompatActivity() {
     // !!!! Установите свой адрес сервера !!!!
     lateinit var binding: ActivityMainBinding
-    val URL = "http://192.168.1.72:8080/"
     var student: Student? = null
     val disposeBag = CompositeDisposable()
-    val retrofitRx by lazy { Retrofit.Builder()
-            .baseUrl(URL)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-    val retrofitCor by lazy { Retrofit.Builder()
-        .baseUrl(URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    }
-    val serviceRx by lazy {
-        retrofitRx.create(StudentsServiceRx::class.java)
-    }
-    val serviceCor by lazy {
-        retrofitCor.create(StudentsServiceCor::class.java)
-    }
+    @Inject lateinit var serviceRx: StudentsServiceRx
+    @Inject lateinit var serviceCor: StudentsServiceCor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
+        (applicationContext as App).appComponent.inject(this)
         setContentView(binding.root)
         RxJavaRealization()
         //KotlinCoroutinesRealization()

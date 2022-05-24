@@ -1,4 +1,4 @@
-package com.example.retrsample2
+package com.example.retrsample2.models
 
 data class Student (
     var name: String? = null,
