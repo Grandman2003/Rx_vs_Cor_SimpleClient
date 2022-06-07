@@ -1,6 +1,8 @@
 package com.example.retrsample2.di
 
+import com.example.retrsample2.presenter.StudentsPresenter
 import com.example.retrsample2.ui.MainActivity
+import com.example.retrsample2.ui.MoxyActivity
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -9,6 +11,7 @@ import javax.inject.Singleton
 @Component(modules = [RetServiceProviderModule::class])
 interface AppComponent {
     fun inject(activity: MainActivity)
+    fun inject(presenter: StudentsPresenter)
 
     @Component.Builder
     interface Builder{
